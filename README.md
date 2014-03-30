@@ -25,29 +25,64 @@ In your project's Gruntfile, add a section named `karma_amd_suite` to the data o
 ```js
 grunt.initConfig({
   karma_amd_suite: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
+      options: {
+        helpers: [
+          'sinon',
+          'squire',
+          'chai',
+          'app'
+        ],
+        framework: 'mocha',
+        mochaMode: 'bdd',
+        baseUrl: 'src',
+        cleanPath: 'src/'
+      },
+      browser: {
+        src: ['src/spec/*_spec.coffee'],
+        dest: 'src/spec/unit-suite.js'
+      },
+      karma: {
+        options: {
+          baseUrl: 'base'
+        },
+        src: ['src/spec/*_spec.coffee'],
+        dest: 'src/spec/main-test.js'
+      }
+  }
 });
 ```
 
 ### Options
 
-#### options.separator
+#### options.helpers
+Type: `Array`
+Default value: `null`
+
+A list of helpers to be loaded into the env prior to executing the test suite
+
+#### options.frameworks
 Type: `String`
-Default value: `',  '`
+Default value: `mocha`
 
-A string value that is used to do something with whatever.
+The testing framework to generate the runner for.  Either `mocha` or `jasmine`.
 
-#### options.punctuation
+#### options.mochaMode
 Type: `String`
-Default value: `'.'`
+Default value: `bdd`
 
-A string value that is used to do something else with whatever else.
+The assertion style to use with mocha.  If 'bdd', Chai 'BDD' will be used.
+
+#### options.baseUrl
+Type: `String`
+Default value: `app`
+
+Your requirejs config baseUrl.
+
+#### options.cleanPath
+Type: `String`
+Default value: ``
+
+Used to clean off substrings from your amd paths.
 
 ### Usage Examples
 
@@ -65,25 +100,8 @@ grunt.initConfig({
 });
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  karma_amd_suite: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+
