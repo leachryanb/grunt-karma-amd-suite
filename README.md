@@ -1,6 +1,6 @@
 # grunt-karma-amd-suite
 
-> Generate test suite amds for jasmine or mocha.
+> Generate amd test suites for karma-runner with jasmine or mocha.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -26,27 +26,11 @@ In your project's Gruntfile, add a section named `karma_amd_suite` to the data o
 grunt.initConfig({
   karma_amd_suite: {
       options: {
-        helpers: [
-          'sinon',
-          'squire',
-          'chai',
-          'app'
-        ],
-        framework: 'mocha',
-        mochaMode: 'bdd',
-        baseUrl: 'src',
-        cleanPath: 'src/'
+        // specify options
       },
-      browser: {
-        src: ['src/spec/*_spec.coffee'],
+      target: {
+        src: ['src/spec/*_spec.js'],
         dest: 'src/spec/unit-suite.js'
-      },
-      karma: {
-        options: {
-          baseUrl: 'base'
-        },
-        src: ['src/spec/*_spec.coffee'],
-        dest: 'src/spec/main-test.js'
       }
   }
 });
@@ -92,13 +76,31 @@ In this example, the default options are used to do something with whatever. So 
 ```js
 grunt.initConfig({
   karma_amd_suite: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+      options: {
+        helpers: [
+          'sinon',
+          'squire',
+          'chai',
+          'app'
+        ],
+        framework: 'mocha',
+        mochaMode: 'bdd',
+        baseUrl: 'src',
+        cleanPath: 'src/'
+      },
+      browser: {
+        src: ['src/spec/*_spec.coffee'],
+        dest: 'src/spec/unit-suite.js'
+      },
+      karma: {
+        options: {
+          baseUrl: 'base'
+        },
+        src: ['src/spec/*_spec.coffee'],
+        dest: 'src/spec/main-test.js'
+      }
+  }
+});```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
