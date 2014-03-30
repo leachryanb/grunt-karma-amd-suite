@@ -1,0 +1,24 @@
+if (window.__karma__) {
+	window.__karma__.loaded = function() {};
+}
+require({
+	baseUrl: '<%= baseUrl %>'
+}, <%= helpers %>, function() {
+	if (window.mocha) {
+		mocha.setup('<%= mochaMode %>');
+		try	{
+			var chai = require('<%= chaiModuleId %>');
+			window.expect = chai.expect;
+		} catch (ex) {
+			console.log("Chai assertion library expected.  Please specify chaiModuleId in config");
+		}
+	}
+
+	require(<%= specs %>, function() {
+		if (window.__karma__) {
+			window.__karma__.start();
+		} else if (window.mocha) {
+			mocha.run();
+		}
+	});
+});
